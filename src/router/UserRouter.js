@@ -7,6 +7,16 @@ var UserRouter = /** @class */ (function () {
         this.router = express_1.Router();
         this.routes();
     }
+    /*public async getAll(req: Request, res: Response) {
+      try {
+        const names = await User.find();
+        res.status(200).json({ names });
+      }
+      catch (error) {
+        res.status(500).json( error );
+      }
+    
+    }*/
     UserRouter.prototype.getAll = function (req, res) {
         User_1.default.find()
             .then(function (data) {

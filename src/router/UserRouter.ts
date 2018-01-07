@@ -10,7 +10,18 @@ class UserRouter {
     this.routes();
   }
 
-  public getAll(req: Request, res: Response): void {
+  /*public async getAll(req: Request, res: Response) {
+    try {
+      const names = await User.find();
+      res.status(200).json({ names });
+    }
+    catch (error) {
+      res.status(500).json( error );
+    }
+  
+  }*/
+
+   public getAll(req: Request, res: Response): void {
     User.find()
     .then((data) => {
       res.status(200).json({ data });
@@ -47,6 +58,7 @@ class UserRouter {
       res.status(500).json({ error });
     });
   }
+  
   public update(req: Request, res: Response): void {
     const username: string = req.params.username;
 
