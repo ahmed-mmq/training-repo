@@ -9,62 +9,47 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const User_1 = require("../schema/User");
-class IUserModel {
-    //constructor(){}
-    getAll(req, res) {
+class UserModel {
+    getAll() {
         return __awaiter(this, void 0, void 0, function* () {
-            try {
-                var names = yield User_1.default.find();
-                res.status(200).json({ names });
-            }
-            catch (error) {
-                res.status(500).json(error);
-            }
+            let data = yield User_1.default.find();
+            return data;
         });
     }
-    getOne(req, res) {
-        const username = req.params.username;
-        User_1.default.findOne({ username })
-            .then((data) => {
-            res.status(200).json({ data });
-        })
-            .catch((error) => {
-            res.status(500).json({ error });
+    getOne(_id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let data = yield User_1.default.findById({ _id });
+            return data;
         });
     }
-    create(req, res) {
-        const firstName = req.body.firstName;
-        const user = new User_1.default({
-            firstName,
-        });
-        user.save()
-            .then((data) => {
-            res.status(201).json({ data });
-        })
-            .catch((error) => {
-            res.status(500).json({ error });
+    post(user) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let data = yield user.save();
+            return data;
         });
     }
-    update(req, res) {
-        const username = req.params.username;
-        User_1.default.findOneAndUpdate({ username }, req.body)
-            .then((data) => {
-            res.status(200).json({ data });
-        })
-            .catch((error) => {
-            res.status(500).json({ error });
+    update(_id, user) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield User_1.default.findByIdAndUpdate(_id, user)
+                .then(() => {
+                return "";
+            })
+                .catch((error) => {
+                return error;
+            });
         });
     }
-    delete(req, res) {
-        const username = req.params.username;
-        User_1.default.findOneAndRemove({ username })
-            .then(() => {
-            res.status(204).end();
-        })
-            .catch((error) => {
-            res.status(500).json({ error });
+    delete(_id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield User_1.default.findByIdAndRemove(_id)
+                .then(() => {
+                return "";
+            })
+                .catch((error) => {
+                return "delete failed";
+            });
         });
     }
 }
-exports.IUserModel = IUserModel;
+exports.UserModel = UserModel;
 //# sourceMappingURL=UserModel.js.map
