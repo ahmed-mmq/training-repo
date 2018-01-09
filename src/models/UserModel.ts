@@ -4,28 +4,17 @@ import User from '../schema/User';
 
 export class IUserModel {
 
-  constructor(){}
-    public getAll(req: Request, res: Response): void {
-        User.find()
-        .then((data) => {
-          res.status(200).json({ data });
-        })
-        .catch((error) => {
-          res.status(500).json({ error });
-        });
-      }
-      /*public async getAll(req: Request, res: Response) {
-        try{
-          let names = await User.find();
+  //constructor(){}
+    public async getAll(req: Request, res: Response): Promise<void> {
+       try{
+          var names = await User.find();
           res.status(200).json({ names });
         }
         catch (error) {
           res.status(500).json(error);
         }
-        return "";
-      }*/
-      
-
+      }
+     
       public getOne(req: Request, res: Response): void {
         const username: string = req.params.username;
     

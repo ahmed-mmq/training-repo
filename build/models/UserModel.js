@@ -1,72 +1,70 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-var User_1 = require("../schema/User");
-var IUserModel = /** @class */ (function () {
-    function IUserModel() {
+const User_1 = require("../schema/User");
+class IUserModel {
+    //constructor(){}
+    getAll(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                var names = yield User_1.default.find();
+                res.status(200).json({ names });
+            }
+            catch (error) {
+                res.status(500).json(error);
+            }
+        });
     }
-    IUserModel.prototype.getAll = function (req, res) {
-        User_1.default.find()
-            .then(function (data) {
-            res.status(200).json({ data: data });
+    getOne(req, res) {
+        const username = req.params.username;
+        User_1.default.findOne({ username })
+            .then((data) => {
+            res.status(200).json({ data });
         })
-            .catch(function (error) {
-            res.status(500).json({ error: error });
+            .catch((error) => {
+            res.status(500).json({ error });
         });
-    };
-    /*public async getAll(req: Request, res: Response) {
-      try{
-        let names = await User.find();
-        res.status(200).json({ names });
-      }
-      catch (error) {
-        res.status(500).json(error);
-      }
-      return "";
-    }*/
-    IUserModel.prototype.getOne = function (req, res) {
-        var username = req.params.username;
-        User_1.default.findOne({ username: username })
-            .then(function (data) {
-            res.status(200).json({ data: data });
-        })
-            .catch(function (error) {
-            res.status(500).json({ error: error });
-        });
-    };
-    IUserModel.prototype.create = function (req, res) {
-        var firstName = req.body.firstName;
-        var user = new User_1.default({
-            firstName: firstName,
+    }
+    create(req, res) {
+        const firstName = req.body.firstName;
+        const user = new User_1.default({
+            firstName,
         });
         user.save()
-            .then(function (data) {
-            res.status(201).json({ data: data });
+            .then((data) => {
+            res.status(201).json({ data });
         })
-            .catch(function (error) {
-            res.status(500).json({ error: error });
+            .catch((error) => {
+            res.status(500).json({ error });
         });
-    };
-    IUserModel.prototype.update = function (req, res) {
-        var username = req.params.username;
-        User_1.default.findOneAndUpdate({ username: username }, req.body)
-            .then(function (data) {
-            res.status(200).json({ data: data });
+    }
+    update(req, res) {
+        const username = req.params.username;
+        User_1.default.findOneAndUpdate({ username }, req.body)
+            .then((data) => {
+            res.status(200).json({ data });
         })
-            .catch(function (error) {
-            res.status(500).json({ error: error });
+            .catch((error) => {
+            res.status(500).json({ error });
         });
-    };
-    IUserModel.prototype.delete = function (req, res) {
-        var username = req.params.username;
-        User_1.default.findOneAndRemove({ username: username })
-            .then(function () {
+    }
+    delete(req, res) {
+        const username = req.params.username;
+        User_1.default.findOneAndRemove({ username })
+            .then(() => {
             res.status(204).end();
         })
-            .catch(function (error) {
-            res.status(500).json({ error: error });
+            .catch((error) => {
+            res.status(500).json({ error });
         });
-    };
-    return IUserModel;
-}());
+    }
+}
 exports.IUserModel = IUserModel;
 //# sourceMappingURL=UserModel.js.map
